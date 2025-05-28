@@ -5,7 +5,6 @@ import HomePage from "./Components/HomePage"
 import LoginPage from "./Components/LoginPage"
 import RegisterPage from "./Components/RegisterPage"
 import Dashboard from "./Components/Dashboard"
-import Navigation from "./Components/Navbar"
 
 function App() {
   return (
