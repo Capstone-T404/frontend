@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./Components/Header"
 import HomePage from "./Components/HomePage"
 import LoginPage from "./Components/LoginPage"
 import RegisterPage from "./Components/RegisterPage"
 import Dashboard from "./Components/Dashboard"
+import Navigation from "./Components/Navbar"
 
 function App() {
   return (
