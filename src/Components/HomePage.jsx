@@ -89,7 +89,11 @@ function EventButton() {
                 return response.json();
             })
             .then(data => {
-                document.getElementById('abc').innerHTML = data.message;
+                let receivedData;
+                for (let index = 0; index < data.message.length; index++) {
+                    receivedData += JSON.stringify(data.message[index]);
+                }
+                document.getElementById('abc').innerHTML = receivedData;
             })
             .catch(error => {
                 console.error('Error :', error);

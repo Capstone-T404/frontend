@@ -49,16 +49,16 @@ export default function Timer() {
     return (
         <div>
             <h1>Timer</h1>
-            <br/>
+            <br />
             <div className="container">
-                <h1><strong/>{formatTime(time)}</h1>
+                <h1><strong />{formatTime(time)}</h1>
             </div>
             {/*<input*/}
             {/*    // type="text"*/}
             {/*    // placeholder="hh:mm:ss"*/}
             {/*    // onBlur={handleManualChange}*/}
             {/*/>*/}
-            <br/>
+            <br />
             <p>Press <strong>Spacebar</strong> to Start/Stop</p>
         </div>
     );
