@@ -4,7 +4,7 @@ export default function HomePage() {
     return (
         <main role="main">
             <Hero />
-
+            <EventButton />
         </main>
     );
 }
@@ -19,5 +19,13 @@ const Hero = () => (
             <Timer />
             <p className="hero_subtitle"></p>
         </div>
+    </section>
+);
+
+const EventButton = () => (
+    <section>
+        <button >A</button>
+        <button >B</button>
+        <button >C</button>
     </section>
 );
