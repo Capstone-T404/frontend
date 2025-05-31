@@ -1,38 +1,271 @@
-.App {
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+
+/* === Reset & Base === */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: rgba(92, 5, 37);
+  color: #e0e0e0;
+  font-family: 'Arial', Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+/* === Utility === */
+.text-center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mt-4 {
+  margin-top: 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* === Layout === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* === Spinner === */
+.spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 60vh;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* === Header & Nav === */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #202020;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(5px);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+#icon img {
+  width: 50px;
+  border-radius: 6px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+}
+
+nav ul li a,
+nav ul li button {
+  all: unset;
+  font: inherit;
+  font-weight: bold;
+  padding: 8px 14px;
+  color: #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+nav ul li a:hover,
+nav ul li button:hover {
+  background-color: #d32f2f;
+}
+
+
+
+
+
+/*!* === AG Grid Dark Theme Overrides === *!*/
+/*.ag-theme-alpine {*/
+/*  --ag-background-color: #202225;*/
+/*  --ag-header-background-color: #2c2f33;*/
+/*  --ag-header-foreground-color: #bd0e0e;*/
+/*  --ag-border-color: #3a3a3a;*/
+/*  --ag-row-border-color: #2a2a2a;*/
+/*  --ag-odd-row-background-color: #2a2a2a;*/
+/*  --ag-even-row-background-color: #252525;*/
+/*  --ag-foreground-color: #f5f5f5;*/
+/*  --ag-row-hover-color: #393e46;*/
+/*  --ag-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;*/
+/*  --ag-font-size: 14px;*/
+/*  --ag-grid-size: 4px;*/
+/*  --ag-cell-horizontal-padding: 12px;*/
+/*  --ag-cell-vertical-padding: 10px;*/
+/*  --ag-header-height: 48px;*/
+/*  --ag-row-height: 44px;*/
+/*}*/
+
+/*.ag-theme-alpine .ag-header-cell-label {*/
+/*  font-weight: bold;*/
+/*  text-transform: uppercase;*/
+/*  font-size: 14px;*/
+/*  letter-spacing: 0.5px;*/
+/*}*/
+
+/*.ag-theme-alpine .ag-row-hover {*/
+/*  background-color: #c4c8cf !important;*/
+/*}*/
+
+/*.ag-theme-alpine .ag-cell {*/
+/*  transition: background-color 0.2s ease;*/
+/*}*/
+
+/*.ag-theme-alpine .ag-cell:focus {*/
+/*  outline: none;*/
+/*  background-color: #484d56;*/
+/*}*/
+
+/* === Hero === */
+.hero {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  min-height: 55vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(92, 5, 37);
+  z-index: 1;
+}
+
+.hero_content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  padding: 40px;
+}
+
+.hero_title {
+  font-size: 4rem;
+  font-family: "Merriweather", serif;
+  margin-bottom: 1rem;
+}
+
+.hero_subtitle {
+  font-size: 1.8rem;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+
+
+.btn {
+  background-color: #e50914;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 20px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #b20710;
+  transform: scale(1.05);
+}
+
+/* === Auth Pages === */
+.LoginPage {
+  max-width: 500px;
+  margin: 80px auto;
+  padding: 40px;
+  background-color: rgba(92, 5, 37);
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.LoginPage h2 {
+  margin-bottom: 20px;
+}
+
+.LoginPage label {
+  align-self: flex-start;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.LoginPage input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background-color: #333;
+  color: white;
+}
+
+.LoginPage button {
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-top: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.LoginLogo {
+  width: 150px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+
+button {
+  background-color: #e50914;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #b20710;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+  .hero_title {
+    font-size: 2.5rem;
   }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+
+  
 }
