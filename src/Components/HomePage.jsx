@@ -1,9 +1,18 @@
 ﻿import Timer from "./Timer.jsx";
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { AgGridReact } from 'ag-grid-react';
+import {useRef, useState} from "react";
+import 'ag-grid-community/styles/ag-theme-alpine.css';
+import Inputs from "./Inputs";
 
+ModuleRegistry.registerModules([AllCommunityModule]);
 export default function HomePage() {
+    
+    
     return (
         <main role="main">
             <Hero />
+            <Inputs />
             <EventButton />
         </main>
     );
@@ -12,7 +21,6 @@ export default function HomePage() {
 const Hero = () => (
     <section
         className="hero"
-    // style={{ backgroundImage: `url(${hero})` }}
     >
         <div className="hero_content">
             <h1 className="hero_title">QLD Reds Event Tracker</h1>
