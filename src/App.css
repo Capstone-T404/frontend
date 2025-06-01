@@ -84,57 +84,53 @@ nav ul li button:hover {
   background-color: #d32f2f;
 }
 
+/* === AG Grid Dark Theme Overrides === */
+.ag-theme-alpine, .main_container {
+  --ag-background-color: #202225;
+  --ag-header-background-color: #2c2f33;
+  --ag-header-foreground-color: #bd0e0e;
+  --ag-border-color: #3a3a3a;
+  --ag-row-border-color: #2a2a2a;
+  --ag-odd-row-background-color: #2a2a2a;
+  --ag-even-row-background-color: #252525;
+  --ag-foreground-color: #f5f5f5;
+  --ag-row-hover-color: #393e46;
+  --ag-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --ag-font-size: 14px;
+  --ag-grid-size: 4px;
+  --ag-cell-horizontal-padding: 12px;
+  --ag-cell-vertical-padding: 10px;
+  --ag-header-height: 48px;
+  --ag-row-height: 44px;
+}
 
+.ag-theme-alpine .ag-header-cell-label, .main_container {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
 
+.ag-theme-alpine .ag-row-hover {
+  background-color: #c4c8cf !important;
+}
 
+.ag-theme-alpine .ag-cell {
+  transition: background-color 0.2s ease;
+}
 
-/*!* === AG Grid Dark Theme Overrides === *!*/
-/*.ag-theme-alpine {*/
-/*  --ag-background-color: #202225;*/
-/*  --ag-header-background-color: #2c2f33;*/
-/*  --ag-header-foreground-color: #bd0e0e;*/
-/*  --ag-border-color: #3a3a3a;*/
-/*  --ag-row-border-color: #2a2a2a;*/
-/*  --ag-odd-row-background-color: #2a2a2a;*/
-/*  --ag-even-row-background-color: #252525;*/
-/*  --ag-foreground-color: #f5f5f5;*/
-/*  --ag-row-hover-color: #393e46;*/
-/*  --ag-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;*/
-/*  --ag-font-size: 14px;*/
-/*  --ag-grid-size: 4px;*/
-/*  --ag-cell-horizontal-padding: 12px;*/
-/*  --ag-cell-vertical-padding: 10px;*/
-/*  --ag-header-height: 48px;*/
-/*  --ag-row-height: 44px;*/
-/*}*/
-
-/*.ag-theme-alpine .ag-header-cell-label {*/
-/*  font-weight: bold;*/
-/*  text-transform: uppercase;*/
-/*  font-size: 14px;*/
-/*  letter-spacing: 0.5px;*/
-/*}*/
-
-/*.ag-theme-alpine .ag-row-hover {*/
-/*  background-color: #c4c8cf !important;*/
-/*}*/
-
-/*.ag-theme-alpine .ag-cell {*/
-/*  transition: background-color 0.2s ease;*/
-/*}*/
-
-/*.ag-theme-alpine .ag-cell:focus {*/
-/*  outline: none;*/
-/*  background-color: #484d56;*/
-/*}*/
+.ag-theme-alpine .ag-cell:focus {
+  outline: none;
+  background-color: #484d56;
+}
 
 /* === Hero === */
 .hero {
   position: relative;
   background-size: cover;
   background-position: center;
-  min-height: 55vh;
-  display: flex;
+  /*min-height: 55vh;*/
+  display:  flex;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -148,7 +144,7 @@ nav ul li button:hover {
   z-index: 1;
 }
 
-.hero_content {
+.hero_content, .main_container {
   position: relative;
   z-index: 2;
   color: #fff;
@@ -167,7 +163,57 @@ nav ul li button:hover {
   margin-bottom: 2rem;
 }
 
+/* === Events inputs === */
 
+.main_container {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 3fr;
+    grid-template-rows: auto 2fr;
+    grid-template-areas: inherit;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.events {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  display: inline-grid;
+  grid-template-areas: inherit;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 12px 24px;
+  border-radius: 6px;
+  transition: background 0.3s ease, transform 0.3s ease;
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.events_button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+
+.main_container_grid {
+  position: relative;
+  height: 300px;
+  min-width: 30%;
+  display: inline-table;
+  margin: 0 auto;
+  padding-left: 100px;
+  overflow-x: auto;
+}
 
 .btn {
   background-color: #e50914;
@@ -239,7 +285,7 @@ nav ul li button:hover {
 
 
 button {
-  background-color: #e50914;
+  background-color: #594a4a;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -264,8 +310,5 @@ label {
   .hero_title {
     font-size: 2.5rem;
   }
-
-
-
   
 }

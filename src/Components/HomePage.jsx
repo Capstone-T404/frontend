@@ -1,34 +1,47 @@
-﻿import Timer from "./Timer.jsx";
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+﻿import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import Inputs from "./Inputs";
+import Timer from "./Timer.jsx";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 export default function HomePage() {
-    
-    
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(false)
+
+
+    const Hero = ({ time, setTime, isRunning, setIsRunning }) => (
+        <section className="hero">
+            <div className="hero_content">
+                <h1 className="hero_title">QLD Reds Event Tracker</h1>
+                <Timer 
+                    time={time} 
+                    setTime={setTime}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                />
+                <p className="hero_subtitle"></p>
+            </div>
+        </section>
+    );
+
     return (
         <main role="main">
-            <Hero />
-            <Inputs />
+            <div className="main_container">
+            <Hero
+                time={time}
+                setTime={setTime}
+                isRunning={isRunning}
+                setIsRunning={setIsRunning}
+            />
+            <Inputs time={time} isRunning={isRunning} />
             <EventButton />
+            </div>
         </main>
     );
 }
 
-const Hero = () => (
-    <section
-        className="hero"
-    >
-        <div className="hero_content">
-            <h1 className="hero_title">QLD Reds Event Tracker</h1>
-            <Timer />
-            <p className="hero_subtitle"></p>
-        </div>
-    </section>
-);
 
 function EventButton() {
 

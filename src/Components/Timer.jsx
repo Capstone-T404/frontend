@@ -1,8 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 
-export default function Timer() {
-    const [time, setTime] = useState(0); // Time in seconds
-    const [isRunning, setIsRunning] = useState(false);
+export default function Timer({ time, setTime, isRunning, setIsRunning }) {
     const intervalRef = useRef(null);
 
     // Format time as HH:MM:SS
