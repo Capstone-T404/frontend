@@ -208,7 +208,7 @@ nav ul li button:hover {
 .main_container_grid {
   position: relative;
   height: 300px;
-  min-width: 30%;
+  width: 30%;
   display: inline-table;
   margin: 0 auto;
   padding-left: 100px;

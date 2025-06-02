@@ -152,6 +152,9 @@ function EventButton() {
     }
     return (
         <section>
+            <br />
+            <br />
+            <br />
             <button onClick={buttonClicked}>Click me</button>
             <button onClick={insertA}>A</button>
             <button onClick={insertB}>B</button>
