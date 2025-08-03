@@ -1,4 +1,4 @@
-﻿import Timer from "./Timer.jsx";
+﻿import Timer from "../../components/UI/Timer/Timer";
 
 export default function HomePage() {
     return (
