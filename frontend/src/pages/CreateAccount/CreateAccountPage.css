@@ -1,0 +1,120 @@
+.create-account-page {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Left Side - Create Account Form */
+.create-account-page__left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white);
+    padding: var(--spacing-xl);
+}
+
+.create-account-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.create-account-form__title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-xs);
+}
+
+.create-account-form__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-2xl);
+}
+
+.create-account-form__form {
+    width: 100%;
+}
+
+.create-account-form__name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+}
+
+.create-account-form__footer {
+    margin-top: var(--spacing-3xl);
+    text-align: center;
+}
+
+.create-account-form__footer p {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+}
+
+.create-account-form__link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--font-size-base);
+}
+
+.create-account-form__link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+/* Right Side - Logo */
+.create-account-page__right {
+    flex: 2;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+}
+
+.create-account-page__logo-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.create-account-page__logo {
+    max-width: 400px;
+    max-height: 400px;
+    width: 100%;
+    height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .create-account-page__left {
+        flex: 1;
+    }
+
+    .create-account-page__right {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .create-account-page {
+        flex-direction: column;
+    }
+
+    .create-account-page__right {
+        display: none;
+    }
+
+    .create-account-page__left {
+        min-height: 100vh;
+    }
+
+    .create-account-form {
+        max-width: 100%;
+    }
+
+    .create-account-form__name-row {
+        grid-template-columns: 1fr;
+    }
+}
