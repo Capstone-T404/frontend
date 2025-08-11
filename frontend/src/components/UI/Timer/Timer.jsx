@@ -1,26 +1,37 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import './Timer.css';
 
-
 export default function Timer() {
-    const [time, setTime] = useState(0); // Time in Seconds
+    const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef(null);
-
-    // Format time HH:MM:SS
-    const formatTime = (totalSeconds) => {
-        const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-        const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-        const secs = String(totalSeconds % 60).padStart(2, '0');
-        return `${hrs}:${mins}:${secs}`;
-    };
     
-    /*
-    After doing some testing I discovered that the spacebar function doesn't work with firefox, 
-    will need to test edge and safari to see if this is the case with both of them as well or if it
-    isolated to firefox
-     */
-    // Start/Stop time on spacebar press
+    const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const getSeconds = (seconds) => String(seconds % 60).padStart(2, '0');
+
+    const toggleTimer = () => {
+        setIsRunning((prev) => !prev);
+    };
+
+    const handleTimeChange = (unit, value) => {
+        const numValue = parseInt(value, 10) || 0;
+        let currentH = Math.floor(time / 3600);
+        let currentM = Math.floor((time % 3600) / 60);
+        let currentS = time % 60;
+        let newTotalSeconds = 0;
+        if (unit === 'm') {
+            newTotalSeconds = (currentH * 3600) + (numValue * 60) + currentS;
+        } else if (unit === 's') {
+            newTotalSeconds = (currentH * 3600) + (currentM * 60) + numValue;
+        }
+        setTime(newTotalSeconds);
+    };
+
+    const adjustSeconds = (amount) => {
+        setTime((prev) => Math.max(0, prev + amount));
+    };
+
+    // Start/Stop time on Spacebar press
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.code === 'Space') {
@@ -31,24 +42,49 @@ export default function Timer() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    // Timer Logic
     useEffect(() => {
         if (isRunning) {
             intervalRef.current = setInterval(() => {
-                setTime((prev) => prev +1);
+                setTime((prev) => prev + 1);
             }, 1000);
         } else if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
         return () => clearInterval(intervalRef.current);
-    },[isRunning]);
+    }, [isRunning]);
 
     return (
-        <div className="timer_container">
-            <div >
-                <span className="time_display">{formatTime(time)}</span>
+        <div className="timer_component_wrapper">
+            <div className="time_display_container">
+                <div className="manual_controls">
+                <button onClick={toggleTimer} className="start_stop_button">
+                    {isRunning ? '⏸' : '▶'}
+                </button>
+                </div>
+                <input
+                    type="number"
+                    value={getMinutes(time)}
+                    onChange={(e) => handleTimeChange('m', e.target.value)}
+                    readOnly={isRunning}
+                    className="time_input"
+                />
+                <span>:</span>
+                <input
+                    type="number"
+                    value={getSeconds(time)}
+                    onChange={(e) => handleTimeChange('s', e.target.value)}
+                    readOnly={isRunning}
+                    className="time_input"
+                />
+            <div className="time_display_container">
+                <div className="seconds_controls">
+                    <button onClick={() => adjustSeconds(1)} disabled={isRunning}>▲</button>
+                    <div>
+                    <button onClick={() => adjustSeconds(-1)} disabled={isRunning}>▼</button>
+                    </div>
+                </div>
+            </div>
             </div>
         </div>
     );
 }
-

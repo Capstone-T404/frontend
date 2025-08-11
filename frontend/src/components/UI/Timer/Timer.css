@@ -1,15 +1,37 @@
-.timer_container {
-    background-color: var(--color-primary);
-    border: 2px solid var(--color-primary);
-    padding: 15px 60px;
+/* Styled to be your maroon, rounded container */
+.time_display_container {
+    background-color: var(--color-primary-darker);
     border-radius: 15px;
-    display: inline-flex;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 10px;
 }
-.time_display{
-    color: var(--color-white);
-    font-size: 1.5em;
+/* Styled the inputs to have no border and a transparent background */
+.time_input{
+    background: none;
+    border: none;
+    color: white;
+    font-size: 3em;
+    width: 3ch; 
+    text-align: center;
     font-weight: bold;
+}
+ /*Remove arrows from number inputs */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Buttons for adjusting seconds manually */
+.manual_controls {
+    padding: 20px;
+}
+span{
+    font-weight: bold;
+    /*padding: 5px;*/
+    padding-bottom: 10px;
+    color: var(--color-white);
+    font-size: 2em;
     
 }
