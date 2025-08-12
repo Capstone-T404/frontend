@@ -1,31 +1,47 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
+import './Timer.css';
 
 export default function Timer() {
-    const [time, setTime] = useState(0); // Time in seconds
+    const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef(null);
+    
+    const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const getSeconds = (seconds) => String(seconds % 60).padStart(2, '0');
 
-    // Format time as HH:MM:SS
-    const formatTime = (totalSeconds) => {
-        const hrs = String(Math.floor(totalSeconds / 3600)).padStart(2, '0');
-        const mins = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, '0');
-        const secs = String(totalSeconds % 60).padStart(2, '0');
-        return `${hrs}:${mins}:${secs}`;
+    const toggleTimer = () => {
+        setIsRunning((prev) => !prev);
     };
 
-    // Start/Stop timer on spacebar press
+    const handleTimeChange = (unit, value) => {
+        const numValue = parseInt(value, 10) || 0;
+        let currentH = Math.floor(time / 3600);
+        let currentM = Math.floor((time % 3600) / 60);
+        let currentS = time % 60;
+        let newTotalSeconds = 0;
+        if (unit === 'm') {
+            newTotalSeconds = (currentH * 3600) + (numValue * 60) + currentS;
+        } else if (unit === 's') {
+            newTotalSeconds = (currentH * 3600) + (currentM * 60) + numValue;
+        }
+        setTime(newTotalSeconds);
+    };
+
+    const adjustSeconds = (amount) => {
+        setTime((prev) => Math.max(0, prev + amount));
+    };
+
+    // Start/Stop time on Spacebar press
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.code === 'Space') {
                 setIsRunning((prev) => !prev);
             }
         };
-
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
-    // Timer logic
     useEffect(() => {
         if (isRunning) {
             intervalRef.current = setInterval(() => {
@@ -34,34 +50,41 @@ export default function Timer() {
         } else if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
-
         return () => clearInterval(intervalRef.current);
     }, [isRunning]);
 
-    // Manual time input
-    // const handleManualChange = (e) => {
-    //     const value = e.target.value;
-    //     const [hrs, mins, secs] = value.split(':').map(Number);
-    //     setTime((hrs * 3600) + (mins * 60) + secs);
-    // };
-
-
     return (
-        <div>
-            <h1>Timer</h1>
-            <br />
-            <div className="container">
-                <h1><strong />{formatTime(time)}</h1>
+        <div className="timer_component_wrapper">
+            <div className="time_display_container">
+                <div className="manual_controls">
+                <button onClick={toggleTimer} className="start_stop_button">
+                    {isRunning ? '⏸' : '▶'}
+                </button>
+                </div>
+                <input
+                    type="number"
+                    value={getMinutes(time)}
+                    onChange={(e) => handleTimeChange('m', e.target.value)}
+                    readOnly={isRunning}
+                    className="time_input"
+                />
+                <span>:</span>
+                <input
+                    type="number"
+                    value={getSeconds(time)}
+                    onChange={(e) => handleTimeChange('s', e.target.value)}
+                    readOnly={isRunning}
+                    className="time_input"
+                />
+            <div className="time_display_container">
+                <div className="seconds_controls">
+                    <button onClick={() => adjustSeconds(1)} disabled={isRunning}>▲</button>
+                    <div>
+                    <button onClick={() => adjustSeconds(-1)} disabled={isRunning}>▼</button>
+                    </div>
+                </div>
             </div>
-            {/*<input*/}
-            {/*    // type="text"*/}
-            {/*    // placeholder="hh:mm:ss"*/}
-            {/*    // onBlur={handleManualChange}*/}
-            {/*/>*/}
-            <br />
-            <p>Press <strong>Spacebar</strong> to Start/Stop</p>
+            </div>
         </div>
     );
 }
-
-
