@@ -1,9 +1,9 @@
-// require('dotenv').config();
+require('dotenv').config();
 const { readFile } = require('fs').promises;
 const express = require('express');
 const router = express.Router();
 const Data = [];
-const knexConfiguration = require('./backend/knexfile.js');
+const knexConfiguration = require('./knexfile.js');
 const knex = require('knex')(knexConfiguration);
 const cors = require('cors');
 // const Timer = require("./Client/Timer");
