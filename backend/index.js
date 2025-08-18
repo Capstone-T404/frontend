@@ -3,7 +3,7 @@ const { readFile } = require('fs').promises;
 const express = require('express');
 const router = express.Router();
 const Data = [];
-const knexConfiguration = require('./backend/knexfile.js');
+const knexConfiguration = require('./knexfile.js');
 const knex = require('knex')(knexConfiguration);
 const cors = require('cors');
 // const Timer = require("./Client/Timer");
@@ -13,7 +13,6 @@ const app = express();
 // Cross Origin Resource configuration
 // Accepted origins
 const allowedOrigins = [
-  'https://api.bneitconsulting.com', // CloudFront endpoint
   'http://localhost:3001', // SSH tunnel
   'http://localhost:80', // SSH tunnel
 ];
@@ -82,4 +81,3 @@ function createGameEvent(time, event, zone) {
   };
   return gameEvent;
 }
-
