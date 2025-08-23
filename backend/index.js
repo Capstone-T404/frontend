@@ -43,7 +43,6 @@ app.use((req, res, next) => {
 });
 
 // Endpoints for testing connection
-app.use('/', require('./routes/hello'));
 app.use('/events', require('./routes/events'));
 
 const PORT = Number(process.env.PORT) || 3001;
