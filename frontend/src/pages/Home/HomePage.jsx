@@ -1,25 +1,38 @@
-﻿import Timer from "../../components/UI/Timer/Timer";
+﻿import React, { useState } from 'react';
+import Timer from "../../components/UI/Timer/Timer";
+import Inputs from '../../components/UI/Inputs/Inputs';
 import './HomePage.css';
 
-export default function HomePage() {
-    const Hero = () => (
-        <section className="hero"
-            // style={{ backgroundImage: `url(${hero})` }}
-        >
-            <div className="hero_content">
-                <h1 className="hero_title">QLD Reds Event Tracker</h1>
-                <div className="timer_container">
-                    <Timer /> 
-                </div>
-                <p className="hero_subtitle"></p>
+
+const Hero = ({ time, setTime, isRunning, setIsRunning }) => (
+    <section className="hero">
+        <div className="hero_content">
+            <h1 className="hero_title">QLD Reds Event Tracker</h1>
+            <div className="timer_container">
+                <Timer
+                    time={time}
+                    setTime={setTime}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                />
             </div>
-        </section>
-    );
-    
+        </div>
+    </section>
+);
+
+export default function HomePage() {
+    const [time, setTime] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+
     return (
         <main role="main">
-            <Hero />
-            {/*<EventButton />*/}
+            <Hero
+                time={time}
+                setTime={setTime}
+                isRunning={isRunning}
+                setIsRunning={setIsRunning}
+            />
+            <Inputs time={time} />
         </main>
     );
 }

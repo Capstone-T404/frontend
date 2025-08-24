@@ -1,9 +1,9 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import './Timer.css';
 
-export default function Timer() {
-    const [time, setTime] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
+export default function Timer({ time, setTime, isRunning, setIsRunning }) {
+    // const [time, setTime] = useState(0);
+    // const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef(null);
     
     const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
@@ -35,6 +35,7 @@ export default function Timer() {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.code === 'Space') {
+                e.preventDefault();
                 setIsRunning((prev) => !prev);
             }
         };

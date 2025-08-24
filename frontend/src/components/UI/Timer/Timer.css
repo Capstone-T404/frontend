@@ -6,6 +6,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width: 350px;
+    position: relative;
+    margin-left: 20px;
 }
 /* Styled the inputs to have no border and a transparent background */
 .time_input{
@@ -16,12 +19,17 @@
     width: 3ch; 
     text-align: center;
     font-weight: bold;
+    align-items: center;
 }
  /*Remove arrows from number inputs */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+/* Remove arrows from number inputs in Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
 }
 /* Buttons for adjusting seconds manually */
 .manual_controls {
