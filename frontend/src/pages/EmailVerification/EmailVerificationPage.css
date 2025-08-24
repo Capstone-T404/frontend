@@ -1,0 +1,147 @@
+/* VerifyEmailPage.css */
+.verify-email-page {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Left Side - Verify Form */
+.verify-email-page__left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white);
+    padding: var(--spacing-xl);
+}
+
+.verify-email-form {
+    width: 100%;
+    max-width: 400px;
+}
+
+.verify-email-form__title {
+    font-size: var(--font-size-4xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--spacing-xs);
+    text-align: center;
+}
+
+.verify-email-form__subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-xs);
+    text-align: center;
+}
+
+.verify-email-form__email {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-2xl);
+    text-align: center;
+    word-break: break-word;
+}
+
+.verify-email-form__form {
+    width: 100%;
+    margin-bottom: var(--spacing-xl);
+}
+
+.verify-email-form__resend {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+}
+
+.verify-email-form__resend p {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+    margin-bottom: var(--spacing-sm);
+}
+
+.verify-email-form__link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+}
+
+.verify-email-form__link:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+.verify-email-form__link--button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+}
+
+.verify-email-form__link--button:disabled {
+    color: var(--color-gray-400);
+    cursor: not-allowed;
+}
+
+.verify-email-form__link--button:disabled:hover {
+    text-decoration: none;
+}
+
+.verify-email-form__footer {
+    text-align: center;
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+}
+
+/* Right Side - Logo */
+.verify-email-page__right {
+    flex: 2;
+    background-color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+}
+
+.verify-email-page__logo-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+.verify-email-page__logo {
+    max-width: 400px;
+    max-height: 400px;
+    width: 100%;
+    height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .verify-email-page__left {
+        flex: 1;
+    }
+
+    .verify-email-page__right {
+        flex: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .verify-email-page {
+        flex-direction: column;
+    }
+
+    .verify-email-page__right {
+        display: none;
+    }
+
+    .verify-email-page__left {
+        min-height: 100vh;
+    }
+
+    .verify-email-form {
+        max-width: 100%;
+    }
+}
