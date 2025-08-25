@@ -21,7 +21,6 @@
     box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
 }
 
-
 .card h2 {
     margin-top: 0;
     font-size: 1.1rem;
@@ -29,26 +28,4 @@
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 15px;
     margin-bottom: 15px;
-}
-
-
-table {
-    width: 100%;
-    border-collapse: collapse; 
-}
-
-th, td {
-    text-align: left;
-    padding: 12px 8px;
-    border-bottom: 1px solid #f0f2f5; 
-}
-
-thead th {
-    color: #888; 
-    font-size: 0.9rem;
-    text-transform: uppercase;
-}
-
-tbody tr:last-child td {
-    border-bottom: none; 
 }

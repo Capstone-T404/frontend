@@ -2,8 +2,6 @@
 import './Timer.css';
 
 export default function Timer({ time, setTime, isRunning, setIsRunning }) {
-    // const [time, setTime] = useState(0);
-    // const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef(null);
     
     const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
@@ -41,7 +39,7 @@ export default function Timer({ time, setTime, isRunning, setIsRunning }) {
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [setIsRunning]);
 
     useEffect(() => {
         if (isRunning) {
@@ -52,7 +50,7 @@ export default function Timer({ time, setTime, isRunning, setIsRunning }) {
             clearInterval(intervalRef.current);
         }
         return () => clearInterval(intervalRef.current);
-    }, [isRunning]);
+    }, [isRunning, setTime]);
 
     return (
         <div className="timer_component_wrapper">

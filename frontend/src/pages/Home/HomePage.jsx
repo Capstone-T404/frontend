@@ -32,7 +32,7 @@ export default function HomePage() {
                 isRunning={isRunning}
                 setIsRunning={setIsRunning}
             />
-            <Inputs time={time} />
+            <Inputs time={time} isRunning={isRunning} />
         </main>
     );
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './Inputs.css'
 
-export default function Inputs({ time }) {
+export default function Inputs({ time, isRunning }) {
     const [team, setTeam] = useState(null);
     const [zone, setZone] = useState(null);
     const [rowData, setRowData] = useState([]);
@@ -32,10 +32,9 @@ export default function Inputs({ time }) {
 
     useEffect(() => {
         const handleKeyDown = (e) => {
-            // Ignore key presses if the user is typing in the timer inputs
             if (e.target.tagName.toLowerCase() === 'input') return;
-
             const key = e.key.toLowerCase();
+            
             // Team shortcuts
             if (key === 'r' && e.shiftKey) setTeam("Reds");
             else if (key === 'o' && e.shiftKey) setTeam("enemyTeam");
@@ -90,21 +89,20 @@ export default function Inputs({ time }) {
                 </div>
                 <h2>Event</h2>
                 <div className="events_button">
-                    <button onClick={() => addEvent("Ruck")}>Ruck (R)</button>
-                    <button onClick={() => addEvent("Pass")}>Pass (P)</button>
-                    <button onClick={() => addEvent("Kick")}>Kick (K)</button>
-                    <button onClick={() => addEvent("Kick collection")}>Kick collection (J)</button>
-                    <button onClick={() => addEvent("Turnover")}>Turnover (T)</button>
-                    <button onClick={() => addEvent("Advantage")}>Advantage (V)</button>
-                    <button onClick={() => addEvent("Penalty")}>Penalty (E)</button>
-                    <button onClick={() => addEvent("Lineout")}>Lineout (L)</button>
-                    <button onClick={() => addEvent("Scrum")}>Scrum (S)</button>
-                    <button onClick={() => addEvent("Maul")}>Maul (M)</button>
+                    <button onClick={() => addEvent("Ruck")} disabled={!isRunning}>Ruck (R)</button>
+                    <button onClick={() => addEvent("Pass")} disabled={!isRunning}>Pass (P)</button>
+                    <button onClick={() => addEvent("Kick")} disabled={!isRunning}>Kick (K)</button>
+                    <button onClick={() => addEvent("Kick collection")} disabled={!isRunning}>Kick collection (J)</button>
+                    <button onClick={() => addEvent("Turnover")} disabled={!isRunning}>Turnover (T)</button>
+                    <button onClick={() => addEvent("Advantage")} disabled={!isRunning}>Advantage (V)</button>
+                    <button onClick={() => addEvent("Penalty")} disabled={!isRunning}>Penalty (E)</button>
+                    <button onClick={() => addEvent("Lineout")} disabled={!isRunning}>Lineout (L)</button>
+                    <button onClick={() => addEvent("Scrum")} disabled={!isRunning}>Scrum (S)</button>
+                    <button onClick={() => addEvent("Maul")} disabled={!isRunning}>Maul (M)</button>
                 </div>
             </div>
             <div className="card">
                 <h2>Game Events</h2>
-                {/* Your existing HTML table for events goes here */}
                 <div className="table-container">
                     <table>
                         <thead>
