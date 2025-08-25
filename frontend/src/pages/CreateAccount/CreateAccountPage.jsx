@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/Auth/AuthContext';
 import Button from '../../components/UI/Button/Button';
 import TextInput from '../../components/UI/TextInput/TextInput';
+import ErrorMessage from '../../components/UI/Message/ErrorMessage/ErrorMessage';
 import RedsLogo from '../../assets/reds-logo.png';
 import './CreateAccountPage.css';
 
@@ -14,6 +16,9 @@ const CreateAccountPage = () => {
         confirmPassword: ''
     });
     const [isLoading, setIsLoading] = useState(false);
+    const [formError, setFormError] = useState('');
+
+    const { signUp, error, clearError } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -22,20 +27,122 @@ const CreateAccountPage = () => {
             ...prev,
             [name]: value
         }));
+
+        // Clear errors when user starts typing
+        if (error || formError) {
+            clearError();
+            setFormError('');
+        }
     };
 
-    const handleSubmit = (e) => {
+    const validateForm = () => {
+        // Check required fields
+        if (!formData.firstName.trim()) {
+            setFormError('First name is required');
+            return false;
+        }
+
+        if (!formData.lastName.trim()) {
+            setFormError('Last name is required');
+            return false;
+        }
+
+        if (!formData.email.trim()) {
+            setFormError('Email is required');
+            return false;
+        }
+
+        if (!formData.password.trim()) {
+            setFormError('Password is required');
+            return false;
+        }
+
+        if (!formData.confirmPassword.trim()) {
+            setFormError('Please confirm your password');
+            return false;
+        }
+
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setFormError('Please enter a valid email address');
+            return false;
+        }
+
+        // Password validation
+        if (formData.password.length < 8) {
+            setFormError('Password must be at least 8 characters long');
+            return false;
+        }
+
+        // Password complexity
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/;
+        if (!passwordRegex.test(formData.password)) {
+            setFormError('Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character');
+            return false;
+        }
+
+        // Confirm password match
+        if (formData.password !== formData.confirmPassword) {
+            setFormError('Passwords do not match');
+            return false;
+        }
+
+        return true;
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!validateForm()) {
+            return;
+        }
+
         setIsLoading(true);
-        // Handle account creation
-        console.log('Creating account:', formData);
-        setTimeout(() => setIsLoading(false), 2000);
+        setFormError('');
+
+        try {
+            await signUp(
+                formData.email,
+                formData.password,
+                formData.firstName,
+                formData.lastName
+            );
+
+            // Success - redirect to email verification page
+            navigate('/verify-email', {
+                state: {
+                    email: formData.email,
+                    message: 'Account created successfully! Please check your email for a verification code.'
+                }
+            });
+
+        } catch (err) {
+            console.error('Sign up error:', err);
+
+            // Handle specific Cognito errors
+            switch (err.code) {
+                case 'UsernameExistsException':
+                    setFormError('An account with this email already exists');
+                    break;
+                case 'InvalidPasswordException':
+                    setFormError('Password does not meet requirements');
+                    break;
+                case 'InvalidParameterException':
+                    setFormError('Invalid email format');
+                    break;
+                case 'TooManyRequestsException':
+                    setFormError('Too many requests. Please try again later');
+                    break;
+                default:
+                    setFormError(err.message || 'Account creation failed. Please try again');
+            }
+        } finally {
+            setIsLoading(false);
+        }
     };
 
-    const handleSignIn = (e) => {
-        e.preventDefault();
-        navigate('/login');
-    };
+    const displayError = formError || error;
 
     return (
         <div className="create-account-page">
@@ -45,6 +152,10 @@ const CreateAccountPage = () => {
                     <p className="create-account-form__subtitle">
                         Join the QLD Reds app
                     </p>
+
+                    {displayError && (
+                        <ErrorMessage message={displayError} />
+                    )}
 
                     <form onSubmit={handleSubmit} className="create-account-form__form">
                         <div className="create-account-form__name-row">
@@ -59,6 +170,7 @@ const CreateAccountPage = () => {
                                 required
                                 size="lg"
                                 fullWidth
+                                disabled={isLoading}
                             />
                             <TextInput
                                 id="lastName"
@@ -71,6 +183,7 @@ const CreateAccountPage = () => {
                                 required
                                 size="lg"
                                 fullWidth
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -85,6 +198,8 @@ const CreateAccountPage = () => {
                             required
                             size="lg"
                             fullWidth
+                            autoComplete="email"
+                            disabled={isLoading}
                         />
 
                         <TextInput
@@ -99,6 +214,7 @@ const CreateAccountPage = () => {
                             size="lg"
                             fullWidth
                             autoComplete="new-password"
+                            disabled={isLoading}
                         />
 
                         <TextInput
@@ -113,6 +229,7 @@ const CreateAccountPage = () => {
                             size="lg"
                             fullWidth
                             autoComplete="new-password"
+                            disabled={isLoading}
                         />
 
                         <Button
@@ -121,6 +238,7 @@ const CreateAccountPage = () => {
                             size="lg"
                             fullWidth
                             loading={isLoading}
+                            disabled={isLoading}
                         >
                             Create Account
                         </Button>
@@ -129,9 +247,9 @@ const CreateAccountPage = () => {
                     <div className="create-account-form__footer">
                         <p>
                             Already have an account?{' '}
-                            <a href="/login" onClick={handleSignIn} className="create-account-form__link">
+                            <Link to="/login" className="create-account-form__link">
                                 Sign in
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>

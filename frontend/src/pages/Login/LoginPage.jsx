@@ -1,7 +1,10 @@
 ﻿import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../context/Auth/AuthContext';
 import Button from '../../components/UI/Button/Button';
 import TextInput from '../../components/UI/TextInput/TextInput';
+import ErrorMessage from '../../components/UI/Message/ErrorMessage/ErrorMessage';
+import { signIn } from '../../services/Auth/CognitoService';
 import RedsLogo from '../../assets/reds-logo.png';
 import './LoginPage.css';
 
@@ -9,14 +12,46 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const { setUser } = useAuth(); // Get setUser from context
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
-        // Handle form submission
-        console.log('Signing in with:', email);
-        setTimeout(() => setIsLoading(false), 2000);
+        setError('');
+
+        try {
+            const result = await signIn(email, password);
+            console.log('Sign in successful:', result);
+
+            // Update the auth context with user info
+            setUser({
+                username: email,
+                session: result
+            });
+
+            // Redirect to dashboard on success
+            navigate('/dashboard');
+        } catch (err) {
+            console.error('Sign in error:', err);
+
+            // Handle different error types
+            let errorMessage = 'Sign in failed. Please try again.';
+
+            if (err.code === 'UserNotConfirmedException') {
+                errorMessage = 'Please verify your email address before signing in.';
+            } else if (err.code === 'NotAuthorizedException') {
+                errorMessage = 'Incorrect email or password.';
+            } else if (err.code === 'UserNotFoundException') {
+                errorMessage = 'No account found with this email address.';
+            }
+
+            setError(errorMessage);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleForgotPassword = () => {
@@ -32,6 +67,8 @@ const LoginPage = () => {
                         Login to your account
                     </p>
 
+                    <ErrorMessage message={error} />
+
                     <form onSubmit={handleSubmit} className="login-form__form">
                         <TextInput
                             id="email"
@@ -44,6 +81,7 @@ const LoginPage = () => {
                             required
                             size="lg"
                             fullWidth
+                            disabled={isLoading}
                         />
 
                         <TextInput
@@ -58,10 +96,16 @@ const LoginPage = () => {
                             size="lg"
                             fullWidth
                             autoComplete="current-password"
+                            disabled={isLoading}
                         />
 
                         <div className="login-form__forgot-password">
-                            <button type="button" onClick={handleForgotPassword} className="login-form__link login-form__link--button">
+                            <button
+                                type="button"
+                                onClick={handleForgotPassword}
+                                className="login-form__link login-form__link--button"
+                                disabled={isLoading}
+                            >
                                 Forgot password?
                             </button>
                         </div>
@@ -72,6 +116,7 @@ const LoginPage = () => {
                             size="lg"
                             fullWidth
                             loading={isLoading}
+                            disabled={isLoading}
                         >
                             Sign In
                         </Button>
@@ -80,9 +125,9 @@ const LoginPage = () => {
                     <div className="login-form__footer">
                         <p>
                             Don't have an account?{' '}
-                            <a href="/signup" className="login-form__link">
+                            <Link to="/signup" className="login-form__link">
                                 Sign up
-                            </a>
+                            </Link>
                         </p>
                     </div>
                 </div>
