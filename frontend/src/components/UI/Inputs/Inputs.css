@@ -1,0 +1,99 @@
+
+.main-content-container {
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 20px;
+}
+
+
+.content-area {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 24px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    border: 1px solid #e0e0e0; 
+}
+
+
+.button-group {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 8px; 
+    margin-bottom: 20px; 
+}
+
+
+.events_button button {
+    background-color: #f0f2f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s; 
+}
+
+.events_button button:hover {
+    background-color: #e2e6ea;
+}
+
+
+.events_button .selected {
+    background-color: #6a0d2d;
+    color: white;
+    border-color: #6a0d2d;
+}
+
+
+h2.section-title {
+    font-size: 1rem;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+
+.selection-status {
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+.table-container {
+    max-height: 400px; 
+    overflow-y: auto;
+}
+/*Table Header*/
+th {
+    text-align: left;
+    position: sticky; 
+    top: 0;           
+    background-color: white;
+    padding: 12px 8px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+/*Table Data*/
+td {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1px solid black;
+}
+/*Table*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+}

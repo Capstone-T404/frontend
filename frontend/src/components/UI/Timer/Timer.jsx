@@ -1,9 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import './Timer.css';
 
-export default function Timer() {
-    const [time, setTime] = useState(0);
-    const [isRunning, setIsRunning] = useState(false);
+export default function Timer({ time, setTime, isRunning, setIsRunning }) {
     const intervalRef = useRef(null);
     
     const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
@@ -35,12 +33,13 @@ export default function Timer() {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.code === 'Space') {
+                e.preventDefault();
                 setIsRunning((prev) => !prev);
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [setIsRunning]);
 
     useEffect(() => {
         if (isRunning) {
@@ -51,7 +50,7 @@ export default function Timer() {
             clearInterval(intervalRef.current);
         }
         return () => clearInterval(intervalRef.current);
-    }, [isRunning]);
+    }, [isRunning, setTime]);
 
     return (
         <div className="timer_component_wrapper">
