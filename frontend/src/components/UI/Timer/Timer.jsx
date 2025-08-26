@@ -1,9 +1,9 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+﻿import React, {useState, useEffect, useRef} from 'react';
 import './Timer.css';
 
-export default function Timer({ time, setTime, isRunning, setIsRunning }) {
+export default function Timer({time, setTime, isRunning, setIsRunning}) {
     const intervalRef = useRef(null);
-    
+
     const getMinutes = (seconds) => String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
     const getSeconds = (seconds) => String(seconds % 60).padStart(2, '0');
 
@@ -56,9 +56,9 @@ export default function Timer({ time, setTime, isRunning, setIsRunning }) {
         <div className="timer_component_wrapper">
             <div className="time_display_container">
                 <div className="manual_controls">
-                <button onClick={toggleTimer} className="start_stop_button">
-                    {isRunning ? '⏸' : '▶'}
-                </button>
+                    <button onClick={toggleTimer} className="start_stop_button">
+                        {isRunning ? '⏸' : '▶'}
+                    </button>
                 </div>
                 <input
                     type="number"
@@ -75,14 +75,14 @@ export default function Timer({ time, setTime, isRunning, setIsRunning }) {
                     readOnly={isRunning}
                     className="time_input"
                 />
-            <div className="time_display_container">
-                <div className="seconds_controls">
-                    <button onClick={() => adjustSeconds(1)} disabled={isRunning}>▲</button>
-                    <div>
-                    <button onClick={() => adjustSeconds(-1)} disabled={isRunning}>▼</button>
+                <div className="time_display_container">
+                    <div className="seconds_controls">
+                        <button onClick={() => adjustSeconds(1)} disabled={isRunning}>▲</button>
+                        <div>
+                            <button onClick={() => adjustSeconds(-1)} disabled={isRunning}>▼</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     );

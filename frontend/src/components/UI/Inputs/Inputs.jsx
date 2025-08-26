@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import './Inputs.css'
 import Button from "../Button/Button";
 import {Space} from "lucide-react";
 
 
-
-export default function Inputs({ time, isRunning, setIsRunning }) {
+export default function Inputs({time, isRunning, setIsRunning}) {
     const [team, setTeam] = useState(null);
     const [zone, setZone] = useState(null);
     const [rowData, setRowData] = useState([]);
@@ -42,7 +41,7 @@ export default function Inputs({ time, isRunning, setIsRunning }) {
              */
             // setIsRunning((prev) => !prev);
             const key = e.key.toLowerCase();
-            
+
             // Team shortcuts
             if (key === 'r' && e.shiftKey) setTeam("Reds");
             else if (key === 'o' && e.shiftKey) setTeam("enemyTeam");
@@ -75,46 +74,67 @@ export default function Inputs({ time, isRunning, setIsRunning }) {
     return (
         <section className="content-area">
             <div className="card">
-                <p className="selection-status">Selected Team: <strong>{team || 'None'}</strong> | Selected Zone: <strong>{zone || 'None'}</strong></p>
+                <p className="selection-status">Selected Team: <strong>{team || 'None'}</strong> | Selected
+                    Zone: <strong>{zone || 'None'}</strong></p>
                 <h2 className="section-title">Team</h2>
                 <div className="button-group">
-                    <Button variant={team === 'Reds' ? 'primary' : 'secondary'} onClick={() => setTeam("Reds")}> Reds (Shift + R)</Button>
-                    <Button variant={team === 'enemyTeam' ? 'primary' : 'secondary'} onClick={() => setTeam("enemyTeam")}> Opposition (Shift + O)</Button>
+                    <Button variant={team === 'Reds' ? 'primary' : 'secondary'} onClick={() => setTeam("Reds")}> Reds
+                        (Shift + R)</Button>
+                    <Button variant={team === 'enemyTeam' ? 'primary' : 'secondary'}
+                            onClick={() => setTeam("enemyTeam")}> Opposition (Shift + O)</Button>
                 </div>
 
                 {/*Reds Zones*/}
                 <h2 className="section-title">Field Zones (Queensland Reds)</h2>
                 <div className="button-group">
-                    <Button size="sm" variant={zone === 'Reds A' ? 'primary' : 'secondary'} onClick={() => setZone("Reds A")}>Reds A (A)</Button>
-                    <Button size="sm" variant={zone === 'Reds B' ? 'primary' : 'secondary'} onClick={() => setZone("Reds B")}>Reds B (B)</Button>
-                    <Button size="sm" variant={zone === 'Reds C' ? 'primary' : 'secondary'} onClick={() => setZone("Reds C")}>Reds C (C)</Button>
-                    <Button size="sm" variant={zone === 'Reds D' ? 'primary' : 'secondary'} onClick={() => setZone("Reds D")}>Reds D (D)</Button>
+                    <Button size="sm" variant={zone === 'Reds A' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Reds A")}>Reds A (A)</Button>
+                    <Button size="sm" variant={zone === 'Reds B' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Reds B")}>Reds B (B)</Button>
+                    <Button size="sm" variant={zone === 'Reds C' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Reds C")}>Reds C (C)</Button>
+                    <Button size="sm" variant={zone === 'Reds D' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Reds D")}>Reds D (D)</Button>
                 </div>
 
                 {/*Opposition Zones*/}
                 <h2 className="section-title">Field Zones (Opposition)</h2>
                 <div className="button-group">
-                    <Button size="sm" variant={zone === 'Opposition A' ? 'primary' : 'secondary'} onClick={() => setZone("Opposition A")}>Opposition A (Shift + A)</Button>
-                    <Button size="sm" variant={zone === 'Opposition B' ? 'primary' : 'secondary'} onClick={() => setZone("Opposition B")}>Opposition B (Shift + B)</Button>
-                    <Button size="sm" variant={zone === 'Opposition C' ? 'primary' : 'secondary'} onClick={() => setZone("Opposition C")}>Opposition C (Shift + C)</Button>
-                    <Button size="sm" variant={zone === 'Opposition D' ? 'primary' : 'secondary'} onClick={() => setZone("Opposition D")}>Opposition D (Shift + D)</Button>
+                    <Button size="sm" variant={zone === 'Opposition A' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Opposition A")}>Opposition A (Shift + A)</Button>
+                    <Button size="sm" variant={zone === 'Opposition B' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Opposition B")}>Opposition B (Shift + B)</Button>
+                    <Button size="sm" variant={zone === 'Opposition C' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Opposition C")}>Opposition C (Shift + C)</Button>
+                    <Button size="sm" variant={zone === 'Opposition D' ? 'primary' : 'secondary'}
+                            onClick={() => setZone("Opposition D")}>Opposition D (Shift + D)</Button>
                 </div>
-                </div>
-                
-                <div className="card">
+            </div>
+
+            <div className="card">
                 {/*Event Buttons*/}
                 <h2 className="section-title">Event</h2>
                 <div className="button-group">
-                    <Button size="sm" variant="tertiary"  onClick={() => addEvent("Ruck")} disabled={!isRunning}>Ruck (R)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Pass")} disabled={!isRunning}>Pass (P)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick")} disabled={!isRunning}>Kick (K)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick collection")} disabled={!isRunning}>Kick collection (J)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Turnover")} disabled={!isRunning}>Turnover (T)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Advantage")} disabled={!isRunning}>Advantage (V)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Penalty")} disabled={!isRunning}>Penalty (E)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Lineout")} disabled={!isRunning}>Lineout (L)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Scrum")} disabled={!isRunning}>Scrum (S)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Maul")} disabled={!isRunning}>Maul (M)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Ruck")} disabled={!isRunning}>Ruck
+                        (R)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Pass")} disabled={!isRunning}>Pass
+                        (P)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick")} disabled={!isRunning}>Kick
+                        (K)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick collection")}
+                            disabled={!isRunning}>Kick collection (J)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Turnover")} disabled={!isRunning}>Turnover
+                        (T)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Advantage")} disabled={!isRunning}>Advantage
+                        (V)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Penalty")} disabled={!isRunning}>Penalty
+                        (E)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Lineout")} disabled={!isRunning}>Lineout
+                        (L)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Scrum")} disabled={!isRunning}>Scrum
+                        (S)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Maul")} disabled={!isRunning}>Maul
+                        (M)</Button>
                 </div>
             </div>
             <div className="card">
@@ -123,18 +143,28 @@ export default function Inputs({ time, isRunning, setIsRunning }) {
                     <table>
                         <thead>
                         <tr>
-                            <th>ID</th><th>Time</th><th>Team</th><th>Zone</th><th>Event</th>
+                            <th>ID</th>
+                            <th>Time</th>
+                            <th>Team</th>
+                            <th>Zone</th>
+                            <th>Event</th>
                         </tr>
                         </thead>
                         <tbody>
                         {rowData.length > 0 ? (
                             rowData.slice().reverse().map(row => (
                                 <tr key={row.eventID}>
-                                    <td>{row.eventID}</td><td>{row.time}</td><td>{row.team}</td><td>{row.zone}</td><td>{row.event}</td>
+                                    <td>{row.eventID}</td>
+                                    <td>{row.time}</td>
+                                    <td>{row.team}</td>
+                                    <td>{row.zone}</td>
+                                    <td>{row.event}</td>
                                 </tr>
                             ))
                         ) : (
-                            <tr><td colSpan="5">No events recorded yet.</td></tr>
+                            <tr>
+                                <td colSpan="5">No events recorded yet.</td>
+                            </tr>
                         )}
                         </tbody>
                     </table>
