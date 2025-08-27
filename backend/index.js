@@ -13,17 +13,21 @@ const app = express();
 // Cross Origin Resource configuration
 // Accepted origins
 const allowedOrigins = [
+  'http://localhost:3001/', // SSH tunnel
   'http://localhost:3001', // SSH tunnel
   'http://localhost:80', // SSH tunnel
+  'http://localhost:3002',
+'http://192.168.1.22:3002'  
 ];
 
 // CORS config
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log('hit');
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS denied'));
+      callback(new Error('CORS denied for origin:' + origin));
     }
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
@@ -43,40 +47,40 @@ app.use((req, res, next) => {
 });
 
 // Endpoints for testing connection
-app.use('/events', require('./routes/events'));
+app.use('/routes/events', require('./routes/events'));
 
 const PORT = Number(process.env.PORT) || 3001;
 app.listen(PORT, '0.0.0.0', () =>
   console.log(`API up on http://localhost:${PORT}`)
 );
 
-//Initial set up for playing around with
-//################################################################################################
-app.use(express.static('Client'));
+// //Initial set up for playing around with
+// //################################################################################################
 
-/*app.get('/', async (request, response) => {
-  response.send('welcome');
-});
-*/
-app.post('/buttonClicked', (request, response) => {
-  response.json({ message: 'Hello There' });
-});
+// /*app.get('/', async (request, response) => {
+//   response.send('welcome');
+// });
+// */
+// app.post('/insertA', (request, response) => {
+//   console.log('hit insert/A post');
+//   response.json({ message: 'Hello There' });
+// });
 
-app.post('/newGameEvent', (request, response) => {
-  const data = request.body;
-  console.log(data);
-  let gameEvent = createGameEvent(data.time, data.event, data.zone);
-  console.log(gameEvent);
-  response.json({ status: 200, message: gameEvent });
-});
+// app.post('/newGameEvent', (request, response) => {
+//   const data = request.body;
+//   console.log(data);
+//   let gameEvent = createGameEvent(data.time, data.event, data.zone);
+//   console.log(gameEvent);
+//   response.json({ status: 200, message: gameEvent });
+// });
 
-//################################################################################################
+// //################################################################################################
 
-function createGameEvent(time, event, zone) {
-  const gameEvent = {
-    gameTime: time,
-    gameEvent: event,
-    gameZone: zone,
-  };
-  return gameEvent;
-}
+// function createGameEvent(time, event, zone) {
+//   const gameEvent = {
+//     gameTime: time,
+//     gameEvent: event,
+//     gameZone: zone,
+//   };
+//   return gameEvent;
+// }

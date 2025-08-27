@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+//Test Route
+router.get('/test', (req, res) => {
+  console.log('GET /test hit!');
+  res.json({ message: 'Test route is working' });
+});
+
 // Add game event to db
 router.post('/addevent', (req, res, next) => {
   const { event_type, event_zone, username, game_id, game_time } = req.body;
