@@ -13,13 +13,14 @@ const app = express();
 // Cross Origin Resource configuration
 // Accepted origins
 const allowedOrigins = [
-  'http://localhost:3001', // SSH tunnel
+  'http://localhost:3001/', // SSH tunnel
   'http://localhost:80', // SSH tunnel
 ];
 
 // CORS config
 const corsOptions = {
   origin: (origin, callback) => {
+    console.log("hit");
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -43,9 +44,9 @@ app.use((req, res, next) => {
 });
 
 // Endpoints for testing connection
-app.use('/events', require('./routes/events'));
+app.use('/routes/events', require('./routes/events'));
 
-const PORT = Number(process.env.PORT) || 3001;
+const PORT = Number(process.env.PORT) || 3002;
 app.listen(PORT, '0.0.0.0', () =>
   console.log(`API up on http://localhost:${PORT}`)
 );
