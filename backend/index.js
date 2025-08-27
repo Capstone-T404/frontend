@@ -20,7 +20,6 @@ const allowedOrigins = [
 // CORS config
 const corsOptions = {
   origin: (origin, callback) => {
-    console.log("hit");
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -51,33 +50,3 @@ app.listen(PORT, '0.0.0.0', () =>
   console.log(`API up on http://localhost:${PORT}`)
 );
 
-//Initial set up for playing around with
-//################################################################################################
-app.use(express.static('Client'));
-
-/*app.get('/', async (request, response) => {
-  response.send('welcome');
-});
-*/
-app.post('/buttonClicked', (request, response) => {
-  response.json({ message: 'Hello There' });
-});
-
-app.post('/newGameEvent', (request, response) => {
-  const data = request.body;
-  console.log(data);
-  let gameEvent = createGameEvent(data.time, data.event, data.zone);
-  console.log(gameEvent);
-  response.json({ status: 200, message: gameEvent });
-});
-
-//################################################################################################
-
-function createGameEvent(time, event, zone) {
-  const gameEvent = {
-    gameTime: time,
-    gameEvent: event,
-    gameZone: zone,
-  };
-  return gameEvent;
-}
