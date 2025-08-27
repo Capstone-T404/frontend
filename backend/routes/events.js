@@ -1,11 +1,36 @@
 const express = require('express');
 const router = express.Router();
+let GameEvents = [];
+
+function pushGameEvent(event){
+    GameEvents.push(event);
+}
+
+function getGameEvents(){
+    return GameEvents;
+}
+
 
 //Test Handler to check connection
 router.get('/test', (req, res) => {
   console.log('GET /test hit!');
   res.json({ message: 'Test route is working' });
 });
+
+//Push Game Event to the Server
+router.post('/pushGameEvent', (req, res) => {
+  pushGameEvent(req.body);
+  res.json({
+    status:200,
+    message: 'success'
+  })
+  .catch(error =>{
+    res.status(500).json({
+      error:true,
+      message:'Internal Server Error'
+    });
+  })
+})
 
 // Add game event to db
 router.post('/addevent', (req, res, next) => {

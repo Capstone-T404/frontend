@@ -15,6 +15,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:3001/', // SSH tunnel
   'http://localhost:80', // SSH tunnel
+  'http://localhost:3002/'
 ];
 
 // CORS config
@@ -23,7 +24,7 @@ const corsOptions = {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS denied'));
+      callback(new Error('CORS denied for orgin:'+ origin));
     }
   },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
