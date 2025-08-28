@@ -23,16 +23,19 @@ const Hero = ({ time, setTime, isRunning, setIsRunning }) => (
 export default function HomePage() {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
+    
 
     return (
         <main role="main">
+            <div className="card">
             <Hero
                 time={time}
                 setTime={setTime}
                 isRunning={isRunning}
                 setIsRunning={setIsRunning}
             />
-            <Inputs time={time} isRunning={isRunning} />
+            </div>            
+            <Inputs time={time} isRunning={isRunning} setIsRunning={setIsRunning} />
         </main>
     );
 }
