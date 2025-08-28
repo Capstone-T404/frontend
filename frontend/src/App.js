@@ -5,6 +5,7 @@ import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import CreateAccountPage from "./pages/CreateAccount/CreateAccountPage";
 import VerifyEmailPage from "./pages/EmailVerification/EmailVerificationPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import TestPage from "./pages/test/testpage";
 import HomePage from "./pages/Home/HomePage";
 
 
@@ -80,6 +81,12 @@ function AppContent() {
                     }
                 />
 
+                <Route
+                    path="/test"
+                    element={
+                            <TestPage /> 
+                    }
+                />
                 <Route
                     path="/home"
                     element={
