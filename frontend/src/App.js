@@ -5,6 +5,8 @@ import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import CreateAccountPage from "./pages/CreateAccount/CreateAccountPage";
 import VerifyEmailPage from "./pages/EmailVerification/EmailVerificationPage";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import HomePage from "./pages/Home/HomePage";
+
 
 function AppContent() {
     const { isAuthenticated, loading } = useAuth();
@@ -75,6 +77,15 @@ function AppContent() {
                         isAuthenticated ?
                             <Dashboard /> :
                             <Navigate to="/login" replace />
+                    }
+                />
+
+                <Route
+                    path="/home"
+                    element={
+                        isAuthenticated ?
+                            <HomePage/> :
+                            <Navigate to="/login" replace/>
                     }
                 />
 
