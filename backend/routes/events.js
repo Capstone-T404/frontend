@@ -19,17 +19,27 @@ router.get('/test', (req, res) => {
 
 //Push Game Event to the Server
 router.post('/pushGameEvent', (req, res) => {
-  pushGameEvent(req.body);
-  res.json({
-    status:200,
-    message: 'success'
+  let event = req.body;
+  let keys = Object.keys(event);
+  console.log(event);
+  if(keys.length == 5){
+    pushGameEvent(event);
+    res.json({
+     status:200,
+     message: 'success'
   })
-  .catch(error =>{
-    res.status(500).json({
-      error:true,
-      message:'Internal Server Error'
-    });
-  })
+  }
+  else{
+    res.json({
+      status:500,
+      message:'internal server error: Event Sent has less than 5 keys. You need {event_type, event_zone, username, game_id, game_time}'
+    })
+  }
+})
+
+router.get('/getAllGameEventData', (req, res) => {
+  console.log(GameEvents);
+  res.json(GameEvents);
 })
 
 // Add game event to db
