@@ -1,6 +1,6 @@
 /* Styled to be your maroon, rounded container */
 .time_display_container {
-    background-color: var(--color-primary-darker);
+    background-color: var(--color-primary-dark);
     border-radius: 15px;
     padding: 20px;
     display: flex;

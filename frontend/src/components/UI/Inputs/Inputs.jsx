@@ -1,11 +1,15 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import './Inputs.css'
 import Button from "../Button/Button";
-import {Space} from "lucide-react";
 
+
+const allZones = [
+    "Reds A", "Reds B", "Reds C", "Reds D",
+    "Opposition D", "Opposition C", "Opposition B", "Opposition A"
+];
 
 export default function Inputs({time, isRunning, setIsRunning}) {
-    const [team, setTeam] = useState(null);
+    const [team, setTeam] = useState('Reds');
     const [zone, setZone] = useState(null);
     const [rowData, setRowData] = useState([]);
     const eventIdRef = useRef(1);
@@ -22,6 +26,7 @@ export default function Inputs({time, isRunning, setIsRunning}) {
             alert("Please select a Team and a Zone before adding an event.");
             return;
         }
+        setIsRunning(true);
         const newEvent = {
             eventID: eventIdRef.current,
             time: formatTimeForEvent(time),
@@ -31,114 +36,119 @@ export default function Inputs({time, isRunning, setIsRunning}) {
         };
         eventIdRef.current += 1;
         setRowData(prev => [...prev, newEvent]);
-    }, [time, team, zone]);
+    }, [time, team, zone, setIsRunning]);
 
+    
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.target.tagName.toLowerCase() === 'input') return;
-            /*
-            The line below if un-commented will trigger the timer to start when an event key is pressed
-             */
-            // setIsRunning((prev) => !prev);
-            const key = e.key.toLowerCase();
 
-            // Team shortcuts
-            if (key === 'r' && e.shiftKey) setTeam("Reds");
-            else if (key === 'o' && e.shiftKey) setTeam("enemyTeam");
-            // Zone shortcuts
-            else if (key === 'a' && !e.shiftKey) setZone("Reds A");
-            else if (key === 'b' && !e.shiftKey) setZone("Reds B");
-            else if (key === 'c' && !e.shiftKey) setZone("Reds C");
-            else if (key === 'd' && !e.shiftKey) setZone("Reds D");
-            else if (key === 'a' && e.shiftKey) setZone("Opposition A");
-            else if (key === 'b' && e.shiftKey) setZone("Opposition B");
-            else if (key === 'c' && e.shiftKey) setZone("Opposition C");
-            else if (key === 'd' && e.shiftKey) setZone("Opposition D");
-            // Event shortcuts
-            else if (key === 'r' && !e.shiftKey) addEvent("Ruck");
-            else if (key === 'p' && !e.shiftKey) addEvent("Pass");
-            else if (key === 'k' && !e.shiftKey) addEvent("Kick");
-            else if (key === 't' && !e.shiftKey) addEvent("Turnover");
-            else if (key === 'j' && !e.shiftKey) addEvent("Kick collection");
-            else if (key === 'v' && !e.shiftKey) addEvent("Advantage");
-            else if (key === 'e' && !e.shiftKey) addEvent("Penalty");
-            else if (key === 'l' && !e.shiftKey) addEvent("Lineout");
-            else if (key === 's' && !e.shiftKey) addEvent("Scrum");
-            else if (key === 'm' && !e.shiftKey) addEvent("Maul");
-        };
+            // Handle Start/Stop on Spacebar press separately
+            if (e.code === 'Space') {
+                e.preventDefault();
+                setIsRunning((prev) => !prev);
+                return;
+            }
 
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [addEvent]);
+            switch (e.key) {
+                default:
+                    break;
+                case 'Tab':
+                    e.preventDefault();
+                    setTeam(currentTeam => currentTeam === 'Reds' ? 'enemyTeam' : 'Reds');
+                    break;
+                // Zone Cycling Shortcuts
+                case 'ArrowRight':
+                case 'ArrowLeft': {
+                    e.preventDefault(); 
+                    const currentIndex = allZones.indexOf(zone);
+                    let nextIndex;
 
-    return (
-        <section className="content-area">
-            <div className="card">
-                <p className="selection-status">Selected Team: <strong>{team || 'None'}</strong> | Selected
-                    Zone: <strong>{zone || 'None'}</strong></p>
-                <h2 className="section-title">Team</h2>
-                <div className="button-group">
-                    <Button variant={team === 'Reds' ? 'primary' : 'secondary'} onClick={() => setTeam("Reds")}> Reds
-                        (Shift + R)</Button>
-                    <Button variant={team === 'enemyTeam' ? 'primary' : 'secondary'}
-                            onClick={() => setTeam("enemyTeam")}> Opposition (Shift + O)</Button>
-                </div>
+                    if (e.key === 'ArrowRight') {
+                        // Move to the next zone (Currently this will wrap all the way around)
+                        nextIndex = (currentIndex + 1) % allZones.length;
+                    } else { // This handles 'ArrowLeft'
+                        // If at the start this will wrap to the end
+                        if (currentIndex <= 0) {
+                            nextIndex = allZones.length - 1;
+                        } else {
+                            nextIndex = currentIndex - 1;
+                        }
+                    }
+                    setZone(allZones[nextIndex]);
+                    break;
+                }
+                // Event shortcuts
+                case 'r':addEvent("Ruck");break;
+                case 'p':addEvent("Pass");break;
+                case 'k':addEvent("Kick");break;
+                case 't':addEvent("Turnover");break;
+                case 'j':addEvent("Kick collection");break;
+                case 'v':addEvent("Advantage");break;
+                case 'e':addEvent("Penalty");break;
+                case 'l':addEvent("Lineout");break;
+                case 's':addEvent("Scrum");break;
+                case 'm':addEvent("Maul");break;
+            }
+        }
+            window.addEventListener('keydown', handleKeyDown);
+            return () => window.removeEventListener('keydown', handleKeyDown);
+            }, [addEvent, setIsRunning, zone]);
 
-                {/*Reds Zones*/}
-                <h2 className="section-title">Field Zones (Queensland Reds)</h2>
-                <div className="button-group">
-                    <Button size="sm" variant={zone === 'Reds A' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Reds A")}>Reds A (A)</Button>
-                    <Button size="sm" variant={zone === 'Reds B' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Reds B")}>Reds B (B)</Button>
-                    <Button size="sm" variant={zone === 'Reds C' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Reds C")}>Reds C (C)</Button>
-                    <Button size="sm" variant={zone === 'Reds D' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Reds D")}>Reds D (D)</Button>
-                </div>
-
-                {/*Opposition Zones*/}
-                <h2 className="section-title">Field Zones (Opposition)</h2>
-                <div className="button-group">
-                    <Button size="sm" variant={zone === 'Opposition A' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Opposition A")}>Opposition A (Shift + A)</Button>
-                    <Button size="sm" variant={zone === 'Opposition B' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Opposition B")}>Opposition B (Shift + B)</Button>
-                    <Button size="sm" variant={zone === 'Opposition C' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Opposition C")}>Opposition C (Shift + C)</Button>
-                    <Button size="sm" variant={zone === 'Opposition D' ? 'primary' : 'secondary'}
-                            onClick={() => setZone("Opposition D")}>Opposition D (Shift + D)</Button>
-                </div>
+    return {
+        TeamSelector: (
+            <div className="team-selector">
+                <Button
+                    variant={team === 'Reds' ? 'primary' : 'secondary'}
+                    size="lg"
+                    
+                    onClick={() => setTeam(currentTeam => currentTeam === 'Reds' ? 'enemyTeam' : 'Reds')}
+                >
+                    {team === 'Reds' ? 'Reds' : 'Opposition'}
+                </Button>
             </div>
-
+        ),
+        ZoneSelector: (() => {
+            const zoneLabels = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'];
+            const zoneValues = [
+                "Reds A", "Reds B", "Reds C", "Reds D",
+                "Opposition D", "Opposition C", "Opposition B", "Opposition A"
+            ];
+            return (
+                <div className="zone-selector">
+                    {zoneLabels.map((label, index) => (
+                        <Button
+                            key={index}
+                            size="lg"
+                            variant={zone === zoneValues[index] ? 'primary' : 'secondary'}
+                            onClick={() => setZone(zoneValues[index])}
+                        >
+                            {label}
+                        </Button>
+                    ))}
+                </div>
+            )
+        })(),
+        EventButtons: (
             <div className="card">
-                {/*Event Buttons*/}
                 <h2 className="section-title">Event</h2>
-                <div className="button-group">
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Ruck")} disabled={!isRunning}>Ruck
-                        (R)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Pass")} disabled={!isRunning}>Pass
-                        (P)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick")} disabled={!isRunning}>Kick
-                        (K)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick collection")}
-                            disabled={!isRunning}>Kick collection (J)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Turnover")} disabled={!isRunning}>Turnover
-                        (T)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Advantage")} disabled={!isRunning}>Advantage
-                        (V)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Penalty")} disabled={!isRunning}>Penalty
-                        (E)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Lineout")} disabled={!isRunning}>Lineout
-                        (L)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Scrum")} disabled={!isRunning}>Scrum
-                        (S)</Button>
-                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Maul")} disabled={!isRunning}>Maul
-                        (M)</Button>
+                <div className="event-buttons-grid">
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Ruck")}>Ruck (R)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Pass")}>Pass (P)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick")}>Kick (K)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Turnover")}>Turnover (T)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Kick collection")}>Kick collection (J)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Advantage")}>Advantage (V)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Penalty")}>Penalty (E)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Lineout")}>Lineout (L)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Scrum")}>Scrum (S)</Button>
+                    <Button size="sm" variant="tertiary" onClick={() => addEvent("Maul")}>Maul (M)</Button>
                 </div>
             </div>
-            <div className="card">
-                <h2>Game Events</h2>
+        ),
+        EventsTable: (
+            <div className="card card-full-height">
+                <h2 className="section-title">Game Events</h2>
                 <div className="table-container">
                     <table>
                         <thead>
@@ -170,6 +180,6 @@ export default function Inputs({time, isRunning, setIsRunning}) {
                     </table>
                 </div>
             </div>
-        </section>
-    );
+        )
+    };
 }

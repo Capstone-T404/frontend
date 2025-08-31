@@ -1,45 +1,39 @@
-﻿import React, { useState } from 'react';
+﻿import React, {useState} from 'react';
 import Timer from "../../components/UI/Timer/Timer";
 import Inputs from '../../components/UI/Inputs/Inputs';
 import './HomePage.css';
 
-
-const Hero = ({ time, setTime, isRunning, setIsRunning }) => (
-    <section className="hero">
-        <div className="hero_content">
-            <h1 className="hero_title">QLD Reds Event Tracker</h1>
-            <div className="timer_container">
-                <Timer
-                    time={time}
-                    setTime={setTime}
-                    isRunning={isRunning}
-                    setIsRunning={setIsRunning}
-                />
-            </div>
-        </div>
-    </section>
-);
-
 export default function HomePage() {
     const [time, setTime] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
-    
+
+    const ui = Inputs({time, isRunning, setIsRunning});
 
     return (
-        <main role="main">
-            <div className="card">
-            <Hero
-                time={time}
-                setTime={setTime}
-                isRunning={isRunning}
-                setIsRunning={setIsRunning}
-            />
-            </div>            
-            <Inputs time={time} isRunning={isRunning} setIsRunning={setIsRunning} />
-        </main>
+            <main className="quadrant-layout">
+                <div className="quadrant-cell header-controls">
+                    <h1>QLD Reds Event Tracker</h1>
+                    <div className="hero_title">
+                        <div className="header-card">
+                            <Timer
+                                time={time}
+                                setTime={setTime}
+                                isRunning={isRunning}
+                                setIsRunning={setIsRunning}
+                            />
+                        </div>
+                        {ui.TeamSelector}
+                    </div>
+                </div>
+                <div className="quadrant-cell header-controls">
+                    <h1>Zones</h1>
+                    {ui.ZoneSelector}
+                </div>
+                {ui.EventButtons}
+                {ui.EventsTable}
+            </main>
     );
 }
-
 
 
 // function EventButton() {
@@ -120,44 +114,44 @@ export default function HomePage() {
 //             });
 //     }
 
-    // function sendGameEvent() {
-    //     fetch('https://api.bneitconsulting.com/events/newGameEvent', {
-    //         method: 'POST',
-    //         headers: {
-    //             'content-type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             time: 1,
-    //             event: 'R',
-    //             zone: 'A',
-    //         }),
-    //     })
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 throw new Error('Error');
-    //             }
-    //             console.log(response);
-    //             return response.json();
-    //         })
-    //         // .then(data => {
-    //         //     console.log('data: ', data.message.gameTime);
-    //         //     (document.getElementById('abc').innerHTML = data.message.gameTime),
-    //         //         data.message.gameEvent,
-    //         //         data.message.gameZone;
-    //         // })
-    //         .catch(error => {
-    //             console.error('Error :', error);
-    //         });
-    // }
-    // return (
-    //     <section>
-    //         <button onClick={buttonClicked}>Click me</button>
-    //         <button onClick={insertA}>A</button>
-    //         <button onClick={insertB}>B</button>
-    //         <button onClick={viewData}>View Data</button>
-    //         <div id="abc"></div>
-    //         <button onClick={sendGameEvent}>Send Game Event</button>
-    //     </section >
-    // );
+// function sendGameEvent() {
+//     fetch('https://api.bneitconsulting.com/events/newGameEvent', {
+//         method: 'POST',
+//         headers: {
+//             'content-type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             time: 1,
+//             event: 'R',
+//             zone: 'A',
+//         }),
+//     })
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error('Error');
+//             }
+//             console.log(response);
+//             return response.json();
+//         })
+//         // .then(data => {
+//         //     console.log('data: ', data.message.gameTime);
+//         //     (document.getElementById('abc').innerHTML = data.message.gameTime),
+//         //         data.message.gameEvent,
+//         //         data.message.gameZone;
+//         // })
+//         .catch(error => {
+//             console.error('Error :', error);
+//         });
+// }
+// return (
+//     <section>
+//         <button onClick={buttonClicked}>Click me</button>
+//         <button onClick={insertA}>A</button>
+//         <button onClick={insertB}>B</button>
+//         <button onClick={viewData}>View Data</button>
+//         <div id="abc"></div>
+//         <button onClick={sendGameEvent}>Send Game Event</button>
+//     </section >
+// );
 // }
 

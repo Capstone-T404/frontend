@@ -1,75 +1,70 @@
-/* Main Layout */
-.content-area {
-    display: flex;
-    gap: 30px;
-    margin-top: 20px;
-}
-
-/* Card Styling */
 .card {
-    flex: 1;
     background-color: #ffffff;
-    border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 24px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-
-
-/* Section Title Styling */
 .section-title {
     font-size: 0.9rem;
     color: #555;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-top: 20px;
+    margin-top: 0;
     margin-bottom: 15px;
     padding-bottom: 10px;
     border-bottom: 1px solid #f0f2f5;
 }
 
-
-/* Button Group Layout */
-.button-group {
-    display: flex;
-    flex-direction: column;
+.team-selector .button {
+    height: 100%;
+    width: 250px; 
+    font-size: 3rem;
+}
+/* Event Buttons */
+.event-buttons-grid {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
     gap: 10px;
-    align-items: stretch;
 }
-
-/* Selection Status Text */
-.selection-status {
-    display: flex;
-    gap: 20px;
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #f0f2f5;
-}
-
-/* Table Styles */
+/* Events Table */
+/*.card-full-height {*/
+/*    flex-grow: 1;*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
 .table-container {
-    max-height: 600px;
+    flex-grow: 1;
     overflow-y: auto;
+    max-height: 500px;
 }
-
 table {
     width: 100%;
     border-collapse: collapse;
 }
-
 th, td {
     text-align: left;
     padding: 12px 8px;
     border-bottom: 1px solid #f0f2f5;
 }
-
 th {
     position: sticky;
     top: 0;
     background-color: white;
-    font-size: 0.9rem;
-    text-transform: uppercase;
+}
+.zone-selector{
+    display: flex;
+    /*margin-right: auto;*/
+    height: 150px;
+    gap: 10px;
+    /*padding-top: 30px;*/
+    padding-left: 50px;
+}
+@media (max-width: 900px) {
+    .zone-selector {
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        align-items: center;
+        gap: 10px;
+    }
 }
 

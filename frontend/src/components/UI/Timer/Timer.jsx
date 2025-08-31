@@ -28,19 +28,7 @@ export default function Timer({time, setTime, isRunning, setIsRunning}) {
     const adjustSeconds = (amount) => {
         setTime((prev) => Math.max(0, prev + amount));
     };
-
-    // Start/Stop time on Spacebar press
-    useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault();
-                setIsRunning((prev) => !prev);
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [setIsRunning]);
-
+    
     useEffect(() => {
         if (isRunning) {
             intervalRef.current = setInterval(() => {

@@ -85,7 +85,8 @@ function AppContent() {
                     element={
                         isAuthenticated ?
                             <HomePage/> :
-                            <Navigate to="/login" replace/>
+                            <HomePage/>
+                            // <Navigate to="/login" replace/>
                     }
                 />
 
