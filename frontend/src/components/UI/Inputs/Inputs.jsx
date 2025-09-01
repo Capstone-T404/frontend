@@ -4,8 +4,8 @@ import Button from "../Button/Button";
 
 
 const allZones = [
-    "Reds A", "Reds B", "Reds C", "Reds D",
-    "Opposition D", "Opposition C", "Opposition B", "Opposition A"
+    "Reds A", "Reds B","Reds M", "Reds C", "Reds D",
+    "Opposition D", "Opposition C", "Opposition M", "Opposition B", "Opposition A"
 ];
 
 export default function Inputs({time, isRunning, setIsRunning}) {
@@ -109,10 +109,10 @@ export default function Inputs({time, isRunning, setIsRunning}) {
             </div>
         ),
         ZoneSelector: (() => {
-            const zoneLabels = ['A', 'B', 'C', 'D', 'D', 'C', 'B', 'A'];
+            const zoneLabels = ['A', 'B', 'M', 'C', 'D', 'D', 'C', 'M', 'B', 'A'];
             const zoneValues = [
-                "Reds A", "Reds B", "Reds C", "Reds D",
-                "Opposition D", "Opposition C", "Opposition B", "Opposition A"
+                "Reds A", "Reds B","Reds M", "Reds C", "Reds D",
+                "Opposition D", "Opposition C", "Opposition M", "Opposition B", "Opposition A"
             ];
             return (
                 <div className="zone-selector">
