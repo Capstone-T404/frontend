@@ -24,6 +24,20 @@ router.post('/pushGameEvent', (req, res) => {
   console.log(event);
   if(keys.length == 5){
     pushGameEvent(event);
+    let game_id = event.game_id;
+    let game_time = event.game_time;
+    let event_type = event.event_type;
+    let event_zone = event.event_zone;
+    let username = event.username;
+    req.db
+      .from('game_plays')
+      .insert({
+        game_id,
+        game_time,
+        event_type,
+        event_zone,
+        username,
+      })
     res.json({
      status:200,
      message: 'success'
